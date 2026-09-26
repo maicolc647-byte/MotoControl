@@ -309,6 +309,7 @@ localStorage.setItem(
     // Actualizar pantalla
 
     actualizarPantalla();
+    mostrarHistorial();
 
 
     // Mostrar resultado
@@ -457,6 +458,52 @@ function actualizarPantalla() {
 
     }
 
+    // ====================================
+    // KILÓMETROS DEL MES
+    // ====================================
+
+    const historialGuardado =
+        localStorage.getItem(CLAVE_HISTORIAL);
+
+    if (historialGuardado) {
+
+        const historial =
+            JSON.parse(historialGuardado);
+
+        const mesActual = new Date().getMonth();
+        const añoActual = new Date().getFullYear();
+
+        let kilometrosMes = 0;
+
+        historial.forEach(function (jornada) {
+
+            const partesFecha =
+                jornada.fecha.split("/");
+
+            
+            const mes = Number(partesFecha[1]) - 1;
+            const año = Number(partesFecha[2]);
+
+            if (
+                mes === mesActual &&
+                año === añoActual
+            ) {
+                kilometrosMes += jornada.kmRecorridos;
+            }
+        });
+
+        document.getElementById(
+            "kilometrosMes"
+        ).textContent =
+            kilometrosMes.toLocaleString("es-CO") + " km";
+
+    } else {
+
+        document.getElementById(
+            "kilometrosMes"
+        ).textContent = "0 km";
+    }
+
 
     // ====================================
     // OBTENER JORNADA
@@ -557,10 +604,12 @@ function actualizarPantalla() {
     );
 
 
-btnFinalizarJornada.addEventListener(
-    "click",
-    abrirModalFinalizar
-);
+    btnFinalizarJornada.addEventListener(
+        "click",
+        abrirModalFinalizar
+    );
+
+    
 
 }
 
