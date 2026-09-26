@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MotoControl 🏍️💰</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================
+         HEADER
+    ========================================= -->
+
+    <header class="header">
+
+        <div class="header-contenido">
+
+            <div>
+
+                <div class="logo">
+                    🏍️ MotoControl
+                </div>
+
+                <p class="subtitulo">
+                    Controla tu trabajo en moto
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ========================================
+         CONTENIDO PRINCIPAL
+    ========================================= -->
+
+    <main class="contenedor">
+
+
+        <!-- ====================================
+             BIENVENIDA
+        ===================================== -->
+
+        <section class="bienvenida">
+
+            <h1>
+                ¡Hola! 👋
+            </h1>
+
+            <p>
+                Lleva el control de tus ingresos,
+                gastos y kilómetros.
+            </p>
+
+            <button id="btnIniciar">
+                ▶️ Iniciar jornada
+            </button>
+
+        </section>
+
+        <!-- ====================================
+     MODAL INICIAR JORNADA
+===================================== -->
+
+<div class="modal" id="modalJornada">
+
+    <div class="modal-contenido">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>🏍️ Iniciar jornada</h2>
+
+                <p>
+                    Registra el kilometraje de tu moto
+                </p>
+            </div>
+
+            <button
+                class="btn-cerrar"
+                id="btnCerrarModal">
+                ✕
+            </button>
+
+        </div>
+
+
+        <form id="formJornada">
+
+            <label for="kmInicial">
+                Kilometraje inicial
+            </label>
+
+            <div class="campo-km">
+
+                <input
+                    type="number"
+                    id="kmInicial"
+                    placeholder="Ej: 25587"
+                    min="0"
+                    step="1"
+                    required
+                >
+
+                <span>km</span>
+
+            </div>
+
+
+            <p class="ayuda">
+                Mira el odómetro de tu Gixxer antes de comenzar.
+            </p>
+
+
+            <button
+                type="submit"
+                class="btn-confirmar">
+                🚀 Comenzar jornada
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+        <!-- ====================================
+             RESUMEN
+        ===================================== -->
+
+        <section class="resumen">
+
+
+            <!-- GANANCIA -->
+
+            <div class="tarjeta">
+
+                <span class="icono">
+                    💰
+                </span>
+
+                <h3>
+                    Ganancia del mes
+                </h3>
+
+                <p id="gananciaMes">
+                    $0
+                </p>
+
+            </div>
+
+
+            <!-- KILOMETRAJE -->
+
+            <div class="tarjeta">
+
+                <span class="icono">
+                    🏍️
+                </span>
+
+                <h3>
+                    Kilometraje actual
+                </h3>
+
+                <p id="kilometrajeActual">
+                    0 km
+                </p>
+
+            </div>
+
+
+            <!-- META -->
+
+            <div class="tarjeta">
+
+                <span class="icono">
+                    🎯
+                </span>
+
+                <h3>
+                    Meta mensual
+                </h3>
+
+                <p id="metaMensual">
+                    $3.000.000
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ====================================
+             PROGRESO DE META
+        ===================================== -->
+
+        <section class="jornada progreso">
+
+
+            <div class="progreso-info">
+
+                <span>
+                    Progreso de la meta
+                </span>
+
+                <span id="porcentajeMeta">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="barra">
+
+                <div
+                    class="barra-progreso"
+                    id="barraProgreso">
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ====================================
+             JORNADA ACTUAL
+        ===================================== -->
+
+        <section class="jornada">
+
+            <h2>
+                📋 Jornada actual
+            </h2>
+
+
+            <div id="estadoJornada">
+
+                <p>
+                    No tienes una jornada activa.
+                </p>
+
+
+                <button id="btnNuevaJornada">
+                    ➕ Nueva jornada
+                </button>
+
+            </div>
+
+
+        </section>
+
+        <!-- ================================= -->
+        <!-- HISTORIAL DE JORNADAS -->
+        <!-- ================================= -->
+
+        <section class="jornada historial">
+
+            <div class="titulo-seccion">
+                <h2>📋 Historial de jornadas</h2>
+                <p>Consulta tus jornadas anteriores</p>
+            </div>
+
+            <div id="listaHistorial">
+
+                <p class="historial-vacio">
+                    Todavía no tienes jornadas registradas.
+                </p>
+
+            </div>
+
+        </section>      
+
+
+
+
+    </main>
+
+
+    <!-- ====================================
+     MODAL FINALIZAR JORNADA
+===================================== -->
+
+<div class="modal" id="modalFinalizarJornada">
+
+    <div class="modal-contenido">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>🏁 Finalizar jornada</h2>
+
+                <p>
+                    Registra el kilometraje final
+                </p>
+
+            </div>
+
+            <button
+                class="btn-cerrar"
+                id="btnCerrarFinalizar">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="resumen-kilometraje">
+
+            <div>
+
+                <span>
+                    Kilometraje inicial
+                </span>
+
+                <strong id="mostrarKmInicial">
+                    0 km
+                </strong>
+
+            </div>
+
+
+            <div class="separador">
+                ↓
+            </div>
+
+
+            <div>
+
+                <span>
+                    Kilometraje final
+                </span>
+
+                <strong id="mostrarKmFinal">
+                    0 km
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <form id="formFinalizarJornada">
+
+            <label for="kmFinal">
+                Kilometraje final
+            </label>
+
+
+            <div class="campo-km">
+
+                <input
+                    type="number"
+                    id="kmFinal"
+                    placeholder="Ej: 25744"
+                    min="0"
+                    step="1"
+                    required
+                >
+
+                <span>km</span>
+
+            </div>
+
+
+            <p class="ayuda">
+                Mira el odómetro de tu Gixxer antes de
+                finalizar la jornada.
+            </p>
+
+
+            <div
+                class="resultado-km"
+                id="resultadoKm">
+
+                Kilómetros recorridos:
+                <strong>0 km</strong>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-confirmar btn-finalizar">
+
+                🏁 Finalizar jornada
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+    <!-- ========================================
+         NAVEGACIÓN INFERIOR
+    ========================================= -->
+
+    <nav class="navegacion">
+
+
+        <button class="nav-item activo">
+
+            <span>
+                🏠
+            </span>
+
+            Inicio
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <span>
+                🏍️
+            </span>
+
+            Jornada
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <span>
+                📋
+            </span>
+
+            Historial
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <span>
+                📊
+            </span>
+
+            Estadísticas
+
+        </button>
+
+
+    </nav>
+
+
+
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+
+        <p>
+            MotoControl © 2026
+        </p>
+
+    </footer>
+
+
+
+    <!-- ========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
