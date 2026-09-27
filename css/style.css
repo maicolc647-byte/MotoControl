@@ -791,3 +791,145 @@ footer {
     }
 
 }
+
+/* ================================= */
+/* REGISTRO DE INGRESOS */
+/* ================================= */
+
+.registro-ingreso {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.registro-ingreso h3 {
+    margin-bottom: 5px;
+    color: var(--oscuro);
+}
+
+.registro-ingreso .ayuda {
+    margin-bottom: 20px;
+}
+
+.registro-ingreso form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.registro-ingreso label {
+    margin-top: 5px;
+    font-weight: 600;
+    color: var(--oscuro);
+}
+
+.campo-ingreso {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--gris-claro);
+    border-radius: 10px;
+    background: var(--blanco);
+    overflow: hidden;
+}
+
+.campo-ingreso span {
+    padding-left: 14px;
+    font-weight: 600;
+    color: var(--gris);
+}
+
+.campo-ingreso input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 12px;
+    font-size: 16px;
+    background: transparent;
+}
+
+.registro-ingreso select,
+.registro-ingreso input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--gris-claro);
+    border-radius: 10px;
+    font-size: 16px;
+    background: var(--blanco);
+    color: var(--oscuro);
+    outline: none;
+}
+
+.registro-ingreso select:focus,
+.registro-ingreso input:focus {
+    border-color: var(--azul);
+}
+
+.registro-ingreso button {
+    margin-top: 10px;
+}
+
+/* ================================= */
+/* HISTORIAL DE INGRESOS */
+/* ================================= */
+
+.lista-ingresos {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.lista-ingresos h3 {
+    margin-bottom: 15px;
+    color: var(--oscuro);
+}
+
+.tarjeta-ingreso {
+    background: var(--fondo);
+    border: 1px solid var(--gris-claro);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.ingreso-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.ingreso-monto {
+    color: var(--verde-oscuro);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.ingreso-fuente {
+    background: #dcfce7;
+    color: var(--verde-oscuro);
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.ingreso-detalles {
+    margin-top: 8px;
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.ingreso-descripcion {
+    margin-top: 8px;
+    color: var(--oscuro);
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+
+    .ingreso-cabecera {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}

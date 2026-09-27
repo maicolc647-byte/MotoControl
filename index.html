@@ -154,7 +154,7 @@
                 </span>
 
                 <h3>
-                    Ganancia del mes
+                    Ingresos del mes
                 </h3>
 
                 <p id="gananciaMes">
@@ -279,6 +279,131 @@
                 <button id="btnNuevaJornada">
                     ➕ Nueva jornada
                 </button>
+
+            </div>
+
+
+            <!-- ====================================
+                 REGISTRAR INGRESO
+            ===================================== -->
+
+            <div class="registro-ingreso">
+
+                <h3>
+                    💰 Registrar ingreso
+                </h3>
+
+                <p class="ayuda">
+                    Registra el dinero recibido durante tu jornada.
+                </p>
+
+
+                <form id="formIngreso">
+
+
+                    <!-- VALOR -->
+
+                    <label for="montoIngreso">
+                        Valor recibido
+                    </label>
+
+                    <div class="campo-ingreso">
+
+                        <span>
+                            $
+                        </span>
+
+                        <input
+                            type="number"
+                            id="montoIngreso"
+                            placeholder="Ej: 25000"
+                            min="0"
+                            step="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- FUENTE -->
+
+                    <label for="fuenteIngreso">
+                        Fuente del ingreso
+                    </label>
+
+                    <select
+                        id="fuenteIngreso"
+                        required>
+
+                        <option value="">
+                            Selecciona una opción
+                        </option>
+
+                        <option value="inDrive">
+                            🚗 inDrive
+                        </option>
+
+                        <option value="otra-app">
+                            📱 Otra aplicación
+                        </option>
+
+                        <option value="efectivo">
+                            💵 Efectivo
+                        </option>
+
+                        <option value="otro">
+                            ➕ Otro
+                        </option>
+
+                    </select>
+
+
+                    <!-- DESCRIPCIÓN -->
+
+                    <label for="descripcionIngreso">
+                        Descripción
+                    </label>
+
+                    <input
+                        type="text"
+                        id="descripcionIngreso"
+                        placeholder="Ej: Viaje o servicio"
+                        maxlength="100"
+                    >
+
+
+                    <!-- BOTÓN -->
+
+                    <button
+                        type="submit"
+                        class="btn-confirmar">
+
+                        💰 Registrar ingreso
+
+                    </button>
+
+
+                </form>
+
+                    <!-- ====================================
+                         HISTORIAL DE INGRESOS
+                    ===================================== -->
+
+                  <div class="lista-ingresos">
+
+                       <h3>
+                            💰 Ingresos registrados
+                       </h3>
+
+                       <div id="listaIngresos">
+
+                           <p class="historial-vacio">
+                              Todavía no tienes ingresos registrados.
+                          </p>
+
+                        </div>
+
+                    </div>
 
             </div>
 

@@ -34,6 +34,16 @@ const mostrarKmInicial = document.getElementById("mostrarKmInicial");
 
 const resultadoKm = document.getElementById("resultadoKm");
 
+const formIngreso = document.getElementById("formIngreso");
+
+const montoIngreso = document.getElementById("montoIngreso");
+
+const fuenteIngreso = document.getElementById("fuenteIngreso");
+
+const descripcionIngreso = document.getElementById("descripcionIngreso");
+
+const listaIngresos = document.getElementById("listaIngresos");
+
 
 // ========================================
 // 2. CLAVES DE LOCALSTORAGE
@@ -44,6 +54,8 @@ const CLAVE_JORNADA = "jornadaActual";
 const CLAVE_KILOMETRAJE = "kilometrajeActual";
 
 const CLAVE_HISTORIAL = "historialJornadas";
+
+const CLAVE_INGRESOS = "ingresosMotoControl";
 
 
 // ========================================
@@ -712,6 +724,343 @@ function mostrarHistorial() {
 }
 
 // ========================================
+// REGISTRAR INGRESO
+// ========================================
+
+function registrarIngreso(event) {
+
+    event.preventDefault();
+
+
+    // ====================================
+    // OBTENER DATOS DEL FORMULARIO
+    // ====================================
+
+    const monto =
+        Number(montoIngreso.value);
+
+    const fuente =
+        fuenteIngreso.value;
+
+    const descripcion =
+        descripcionIngreso.value.trim();
+
+
+    // ====================================
+    // VALIDAR MONTO
+    // ====================================
+
+    if (
+        isNaN(monto) ||
+        monto <= 0
+    ) {
+
+        alert(
+            "⚠️ Introduce un valor de ingreso válido."
+        );
+
+        return;
+    }
+
+
+    // ====================================
+    // VALIDAR FUENTE
+    // ====================================
+
+    if (!fuente) {
+
+        alert(
+            "⚠️ Selecciona la fuente del ingreso."
+        );
+
+        return;
+    }
+
+
+    // ====================================
+    // FECHA Y HORA
+    // ====================================
+
+    const ahora = new Date();
+
+
+    const ingreso = {
+
+        fecha:
+            ahora.toLocaleDateString("es-CO"),
+
+        hora:
+            ahora.toLocaleTimeString(
+                "es-CO",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ),
+
+        monto: monto,
+
+        fuente: fuente,
+
+        descripcion: descripcion
+
+    };
+
+
+    // ====================================
+    // OBTENER INGRESOS EXISTENTES
+    // ====================================
+
+    const ingresosGuardados =
+        localStorage.getItem(
+            CLAVE_INGRESOS
+        );
+
+
+    const ingresos =
+        ingresosGuardados
+            ? JSON.parse(ingresosGuardados)
+            : [];
+
+
+    // ====================================
+    // AGREGAR NUEVO INGRESO
+    // ====================================
+
+    ingresos.push(ingreso);
+
+
+    // ====================================
+    // GUARDAR
+    // ====================================
+
+    localStorage.setItem(
+        CLAVE_INGRESOS,
+        JSON.stringify(ingresos)
+    );
+
+
+    // ====================================
+    // LIMPIAR FORMULARIO
+    // ====================================
+
+    formIngreso.reset();
+    actualizarIngresosMes();
+
+
+    // ====================================
+    // CONFIRMACIÓN
+    // ====================================
+
+    alert(
+        `💰 Ingreso registrado correctamente.\n\n` +
+        `Valor: $${monto.toLocaleString("es-CO")}`
+    );
+
+}
+
+// ========================================
+// CALCULAR INGRESOS DEL MES
+// ========================================
+
+function actualizarIngresosMes() {
+
+    const elementoGanancia =
+        document.getElementById("gananciaMes");
+
+    const ingresosGuardados =
+        localStorage.getItem(CLAVE_INGRESOS);
+
+    if (!ingresosGuardados) {
+
+        elementoGanancia.textContent = "$0";
+
+        return;
+    }
+
+    const ingresos =
+        JSON.parse(ingresosGuardados);
+
+    const ahora = new Date();
+
+    const mesActual =
+        ahora.getMonth();
+
+    const añoActual =
+        ahora.getFullYear();
+
+    let totalMes = 0;
+
+
+    ingresos.forEach(function (ingreso) {
+
+        const partesFecha =
+            ingreso.fecha.split("/");
+
+        const mes =
+            Number(partesFecha[1]) - 1;
+
+        const año =
+            Number(partesFecha[2]);
+
+
+        if (
+            mes === mesActual &&
+            año === añoActual
+        ) {
+
+            totalMes +=
+                Number(ingreso.monto) || 0;
+        }
+
+    });
+
+
+    elementoGanancia.textContent =
+        "$" + totalMes.toLocaleString("es-CO");
+
+}
+
+// ========================================
+// MOSTRAR HISTORIAL DE INGRESOS
+// ========================================
+
+function mostrarIngresos() {
+
+    const ingresosGuardados =
+        localStorage.getItem(CLAVE_INGRESOS);
+
+
+    // No existen ingresos
+
+    if (!ingresosGuardados) {
+
+        listaIngresos.innerHTML = `
+            <p class="historial-vacio">
+                Todavía no tienes ingresos registrados.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    const ingresos =
+        JSON.parse(ingresosGuardados);
+
+
+    // El historial está vacío
+
+    if (ingresos.length === 0) {
+
+        listaIngresos.innerHTML = `
+            <p class="historial-vacio">
+                Todavía no tienes ingresos registrados.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    // Limpiar contenido anterior
+
+    listaIngresos.innerHTML = "";
+
+
+    // Mostrar ingresos del más reciente al más antiguo
+
+    const ingresosOrdenados =
+        [...ingresos].reverse();
+
+
+    ingresosOrdenados.forEach(
+        function (ingreso) {
+
+            const tarjeta =
+                document.createElement("div");
+
+            tarjeta.classList.add(
+                "tarjeta-ingreso"
+            );
+
+
+            // Nombre visible de la fuente
+
+            let nombreFuente =
+                ingreso.fuente;
+
+
+            if (ingreso.fuente === "inDrive") {
+                nombreFuente = "🚗 inDrive";
+            }
+
+            if (ingreso.fuente === "otra-app") {
+                nombreFuente = "📱 Otra aplicación";
+            }
+
+            if (ingreso.fuente === "efectivo") {
+                nombreFuente = "💵 Efectivo";
+            }
+
+            if (ingreso.fuente === "otro") {
+                nombreFuente = "➕ Otro";
+            }
+
+
+            tarjeta.innerHTML = `
+
+                <div class="ingreso-cabecera">
+
+                    <span class="ingreso-monto">
+
+                        + $${Number(
+                            ingreso.monto
+                        ).toLocaleString("es-CO")}
+
+                    </span>
+
+                    <span class="ingreso-fuente">
+
+                        ${nombreFuente}
+
+                    </span>
+
+                </div>
+
+
+                <div class="ingreso-detalles">
+
+                    📅 ${ingreso.fecha}
+                    ·
+                    🕐 ${ingreso.hora}
+
+                </div>
+
+
+                ${
+                    ingreso.descripcion
+                        ? `
+                            <div class="ingreso-descripcion">
+                                📝 ${ingreso.descripcion}
+                            </div>
+                          `
+                        : ""
+                }
+
+            `;
+
+
+            listaIngresos.appendChild(
+                tarjeta
+            );
+
+        }
+    );
+
+}
+
+// ========================================
 // 7. EVENTOS
 // ========================================
 
@@ -736,6 +1085,11 @@ btnCerrarModal.addEventListener(
 formJornada.addEventListener(
     "submit",
     iniciarJornada
+);
+
+formIngreso.addEventListener(
+    "submit",
+    registrarIngreso
 );
 
 btnCerrarFinalizar.addEventListener(
@@ -789,4 +1143,5 @@ modalJornada.addEventListener(
 
 actualizarPantalla();
 mostrarHistorial();
-
+actualizarIngresosMes();
+mostrarIngresos();
