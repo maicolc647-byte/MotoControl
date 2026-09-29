@@ -2,7 +2,7 @@
 // MOTOCONTROL
 // FASE 3 - INICIAR JORNADA
 // ========================================
-
+//buenoooooo
 
 // ========================================
 // 1. ELEMENTOS DEL HTML
@@ -731,6 +731,13 @@ function mostrarHistorial() {
                     🔴 Odómetro final:
                     <strong>
                         ${jornada.kmFinal.toLocaleString("es-CO")} km
+                    </strong>
+                </p>
+
+                <p>
+                    💰 Ingresos de la jornada:
+                    <strong>
+                        $${ingresosJornada.toLocaleString("es-CO")}
                     </strong>
                 </p>
 
