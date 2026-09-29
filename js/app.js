@@ -664,11 +664,31 @@ function mostrarHistorial() {
         return;
     }
 
-    // Limpiar contenido anterior
-    listaHistorial.innerHTML = "";
+            // Limpiar contenido anterior
+            listaHistorial.innerHTML = "";
 
-    // Recorrer todas las jornadas
-    historial.forEach(function (jornada) {
+            // Recorrer todas las jornadas
+            historial.forEach(function (jornada) {
+        
+                     // Obtener ingresos registrados
+        const ingresosGuardados = localStorage.getItem(CLAVE_INGRESOS);
+
+            const ingresos = ingresosGuardados
+            ? JSON.parse(ingresosGuardados)
+                : [];
+
+            // Calcular ingresos de esta jornada
+            let ingresosJornada = 0;
+
+            ingresos.forEach(function (ingreso) {
+
+            if (ingreso.kmInicial === jornada.kmInicial) {
+                 ingresosJornada += Number(ingreso.monto) || 0;
+            }
+
+        });
+
+
 
         const tarjeta =
             document.createElement("div");
@@ -784,27 +804,47 @@ function registrarIngreso(event) {
     const ahora = new Date();
 
 
+    const jornadaActual =
+    localStorage.getItem(CLAVE_JORNADA);
+
+
+    let datosJornada = null;
+
+
+    if (jornadaActual) {
+
+    datosJornada =
+        JSON.parse(jornadaActual);
+
+    }
+
+
     const ingreso = {
 
         fecha:
             ahora.toLocaleDateString("es-CO"),
 
-        hora:
-            ahora.toLocaleTimeString(
-                "es-CO",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            ),
+       hora:
+           ahora.toLocaleTimeString(
+              "es-CO",
+              {
+                  hour: "2-digit",
+                  minute: "2-digit"
+             }
+          ),
 
-        monto: monto,
+       monto: monto,
 
-        fuente: fuente,
+     fuente: fuente,
 
-        descripcion: descripcion
+     descripcion: descripcion,
 
-    };
+     kmInicial:
+          datosJornada
+             ? datosJornada.kmInicial
+             : null
+
+    };  
 
 
     // ====================================
