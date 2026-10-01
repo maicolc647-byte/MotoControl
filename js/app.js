@@ -44,6 +44,14 @@ const descripcionIngreso = document.getElementById("descripcionIngreso");
 
 const listaIngresos = document.getElementById("listaIngresos");
 
+const formGasto = document.getElementById("formGasto");
+
+const montoGasto = document.getElementById("montoGasto");
+
+const categoriaGasto = document.getElementById("categoriaGasto");
+
+const descripcionGasto = document.getElementById("descripcionGasto");
+
 
 // ========================================
 // 2. CLAVES DE LOCALSTORAGE
@@ -56,6 +64,8 @@ const CLAVE_KILOMETRAJE = "kilometrajeActual";
 const CLAVE_HISTORIAL = "historialJornadas";
 
 const CLAVE_INGRESOS = "ingresosMotoControl";
+
+const CLAVE_GASTOS = "gastosMotoControl";
 
 
 // ========================================
@@ -921,6 +931,152 @@ function registrarIngreso(event) {
 }
 
 // ========================================
+// REGISTRAR GASTO
+// ========================================
+
+function registrarGasto(event) {
+
+    event.preventDefault();
+
+    // ====================================
+    // OBTENER DATOS DEL FORMULARIO
+    // ====================================
+
+    const monto = Number(montoGasto.value);
+
+    const categoria = categoriaGasto.value;
+
+    const descripcion = descripcionGasto.value.trim();
+
+
+    // ====================================
+    // VALIDAR MONTO
+    // ====================================
+
+    if (isNaN(monto) || monto <= 0) {
+
+        alert("⚠️ Introduce un valor de gasto válido.");
+
+        return;
+    }
+
+
+    // ====================================
+    // VALIDAR CATEGORÍA
+    // ====================================
+
+    if (!categoria) {
+
+        alert("⚠️ Selecciona una categoría para el gasto.");
+
+        return;
+    }
+
+
+    // ====================================
+    // FECHA Y HORA
+    // ====================================
+
+    const ahora = new Date();
+
+
+    // ====================================
+    // OBTENER JORNADA ACTUAL
+    // ====================================
+
+    const jornadaActual =
+        localStorage.getItem(CLAVE_JORNADA);
+
+    let datosJornada = null;
+
+
+    if (jornadaActual) {
+
+        datosJornada =
+            JSON.parse(jornadaActual);
+    }
+
+
+    // ====================================
+    // CREAR GASTO
+    // ====================================
+
+    const gasto = {
+
+        fecha:
+            ahora.toLocaleDateString("es-CO"),
+
+        hora:
+            ahora.toLocaleTimeString(
+                "es-CO",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ),
+
+        monto: monto,
+
+        categoria: categoria,
+
+        descripcion: descripcion,
+
+        kmInicial:
+            datosJornada
+                ? datosJornada.kmInicial
+                : null
+    };
+
+
+    // ====================================
+    // OBTENER GASTOS EXISTENTES
+    // ====================================
+
+    const gastosGuardados =
+        localStorage.getItem(CLAVE_GASTOS);
+
+
+    const gastos =
+        gastosGuardados
+            ? JSON.parse(gastosGuardados)
+            : [];
+
+
+    // ====================================
+    // AGREGAR NUEVO GASTO
+    // ====================================
+
+    gastos.push(gasto);
+
+
+    // ====================================
+    // GUARDAR
+    // ====================================
+
+    localStorage.setItem(
+        CLAVE_GASTOS,
+        JSON.stringify(gastos)
+    );
+
+
+    // ====================================
+    // LIMPIAR FORMULARIO
+    // ====================================
+
+    formGasto.reset();
+
+
+    // ====================================
+    // CONFIRMACIÓN
+    // ====================================
+
+    alert(
+        `💸 Gasto registrado correctamente.\n\n` +
+        `Valor: $${monto.toLocaleString("es-CO")}`
+    );
+}
+
+// ========================================
 // CALCULAR INGRESOS DEL MES
 // ========================================
 
@@ -1122,6 +1278,163 @@ function mostrarIngresos() {
 }
 
 // ========================================
+// MOSTRAR HISTORIAL DE GASTOS
+// ========================================
+
+function mostrarGastos() {
+
+    const listaGastos =
+        document.getElementById("listaGastos");
+
+
+    const gastosGuardados =
+        localStorage.getItem(CLAVE_GASTOS);
+
+
+    // No existen gastos
+
+    if (!gastosGuardados) {
+
+        listaGastos.innerHTML = `
+            <p class="historial-vacio">
+                Todavía no tienes gastos registrados.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    const gastos =
+        JSON.parse(gastosGuardados);
+
+
+    // El historial está vacío
+
+    if (gastos.length === 0) {
+
+        listaGastos.innerHTML = `
+            <p class="historial-vacio">
+                Todavía no tienes gastos registrados.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    // Limpiar contenido anterior
+
+    listaGastos.innerHTML = "";
+
+
+    // Mostrar primero el gasto más reciente
+
+    const gastosOrdenados =
+        [...gastos].reverse();
+
+
+    gastosOrdenados.forEach(
+        function (gasto) {
+
+            const tarjeta =
+                document.createElement("div");
+
+
+            tarjeta.classList.add(
+                "tarjeta-gasto"
+            );
+
+
+            // Nombre visible de la categoría
+
+            let nombreCategoria =
+                gasto.categoria;
+
+
+            if (gasto.categoria === "gasolina") {
+                nombreCategoria = "⛽ Gasolina";
+            }
+
+            if (gasto.categoria === "mantenimiento") {
+                nombreCategoria = "🔧 Mantenimiento";
+            }
+
+            if (gasto.categoria === "llantas") {
+                nombreCategoria = "🛞 Llantas";
+            }
+
+            if (gasto.categoria === "parqueadero") {
+                nombreCategoria = "🅿️ Parqueadero";
+            }
+
+            if (gasto.categoria === "alimentacion") {
+                nombreCategoria = "🍔 Alimentación";
+            }
+
+            if (gasto.categoria === "otro") {
+                nombreCategoria = "➕ Otro";
+            }
+
+
+            tarjeta.innerHTML = `
+
+                <div class="gasto-cabecera">
+
+                    <span class="gasto-monto">
+
+                        - $${Number(
+                            gasto.monto
+                        ).toLocaleString("es-CO")}
+
+                    </span>
+
+
+                    <span class="gasto-categoria">
+
+                        ${nombreCategoria}
+
+                    </span>
+
+                </div>
+
+
+                <div class="gasto-detalles">
+
+                    📅 ${gasto.fecha}
+
+                    ·
+
+                    🕐 ${gasto.hora}
+
+                </div>
+
+
+                ${
+                    gasto.descripcion
+                        ? `
+                            <div class="gasto-descripcion">
+
+                                📝 ${gasto.descripcion}
+
+                            </div>
+                        `
+                        : ""
+                }
+
+            `;
+
+
+            listaGastos.appendChild(
+                tarjeta
+            );
+
+        }
+    );
+
+}
+
+// ========================================
 // 7. EVENTOS
 // ========================================
 
@@ -1151,6 +1464,11 @@ formJornada.addEventListener(
 formIngreso.addEventListener(
     "submit",
     registrarIngreso
+);
+
+formGasto.addEventListener(
+    "submit",
+    registrarGasto
 );
 
 btnCerrarFinalizar.addEventListener(
@@ -1206,3 +1524,4 @@ actualizarPantalla();
 mostrarHistorial();
 actualizarIngresosMes();
 mostrarIngresos();
+mostrarGastos();

@@ -407,6 +407,102 @@
 
             </div>
 
+                        <!-- REGISTRAR GASTO -->
+            <div class="registro-gasto">
+
+                <h3>💸 Registrar gasto</h3>
+
+                <p class="ayuda">
+                    Registra los gastos realizados durante tu jornada.
+                </p>
+
+                <form id="formGasto">
+
+                    <label for="montoGasto">
+                        Valor del gasto
+                    </label>
+
+                    <div class="campo-ingreso">
+                        <span>$</span>
+
+                        <input
+                            type="number"
+                            id="montoGasto"
+                            placeholder="Ej: 20000"
+                            min="0"
+                            step="100"
+                            required
+                        >
+                    </div>
+
+                    <label for="categoriaGasto">
+                        Categoría
+                    </label>
+
+                    <select id="categoriaGasto" required>
+
+                        <option value="">
+                            Selecciona una categoría
+                        </option>
+
+                        <option value="gasolina">
+                            ⛽ Gasolina
+                        </option>
+
+                        <option value="mantenimiento">
+                            🔧 Mantenimiento
+                        </option>
+
+                        <option value="llantas">
+                            🛞 Llantas
+                        </option>
+
+                        <option value="parqueadero">
+                            🅿️ Parqueadero
+                        </option>
+
+                        <option value="alimentacion">
+                            🍔 Alimentación
+                        </option>
+
+                        <option value="otro">
+                            ➕ Otro
+                        </option>
+
+                    </select>
+
+                    <label for="descripcionGasto">
+                        Descripción
+                    </label>
+
+                    <input
+                        type="text"
+                        id="descripcionGasto"
+                        placeholder="Ej: Tanque de gasolina"
+                        maxlength="100"
+                    >
+
+                    <button
+                        type="submit"
+                        class="btn-confirmar"
+                    >
+                        💸 Registrar gasto
+                    </button>
+
+                </form>
+
+                <div class="lista-gastos">
+                    <h3>💸 Gastos registrados</h3>
+
+                    <div id="listaGastos">
+                        <p class="historial-vacio">
+                            Todavía no tienes gastos registrados.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
 
         </section>
 

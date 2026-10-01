@@ -933,3 +933,157 @@ footer {
     }
 
 }
+
+/* ========================================
+   REGISTRAR GASTO
+======================================== */
+
+.registro-gasto {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.registro-gasto h3 {
+    margin-bottom: 5px;
+    color: var(--oscuro);
+}
+
+.registro-gasto .ayuda {
+    margin-bottom: 20px;
+}
+
+.registro-gasto form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.registro-gasto label {
+    margin-top: 5px;
+    font-weight: 600;
+    color: var(--oscuro);
+}
+
+
+/* Campo del valor */
+
+.registro-gasto .campo-ingreso {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--gris-claro);
+    border-radius: 10px;
+    background: var(--blanco);
+    overflow: hidden;
+}
+
+.registro-gasto .campo-ingreso span {
+    padding-left: 14px;
+    font-weight: 600;
+    color: var(--gris);
+}
+
+.registro-gasto .campo-ingreso input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 12px;
+    font-size: 16px;
+    background: transparent;
+}
+
+
+/* Select y descripción */
+
+.registro-gasto select,
+.registro-gasto input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--gris-claro);
+    border-radius: 10px;
+    font-size: 16px;
+    background: var(--blanco);
+    color: var(--oscuro);
+    outline: none;
+}
+
+
+/* Efecto al seleccionar */
+
+.registro-gasto select:focus,
+.registro-gasto input:focus {
+    border-color: var(--rojo);
+}
+
+
+/* Botón */
+
+.registro-gasto button {
+    margin-top: 10px;
+}
+
+/* ========================================
+   GASTOS REGISTRADOS
+======================================== */
+
+.lista-gastos {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.lista-gastos h3 {
+    margin-bottom: 15px;
+    color: var(--oscuro);
+}
+
+.tarjeta-gasto {
+    background: var(--fondo);
+    border: 1px solid var(--gris-claro);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.gasto-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.gasto-monto {
+    color: var(--rojo);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.gasto-categoria {
+    background: #fee2e2;
+    color: var(--rojo);
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.gasto-detalles {
+    margin-top: 8px;
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.gasto-descripcion {
+    margin-top: 8px;
+    color: var(--oscuro);
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+
+    .gasto-cabecera {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
