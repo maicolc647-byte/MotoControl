@@ -687,6 +687,13 @@ function mostrarHistorial() {
             }
 
         });
+        
+            // Calcular ingreso por kilómetro
+            let ingresoPorKm = 0;
+
+            if (jornada.kmRecorridos > 0) {
+                ingresoPorKm = ingresosJornada / jornada.kmRecorridos;
+            }
 
 
 
@@ -738,6 +745,13 @@ function mostrarHistorial() {
                     💰 Ingresos de la jornada:
                     <strong>
                         $${ingresosJornada.toLocaleString("es-CO")}
+                    </strong>
+                </p>
+
+                <p>
+                    📊 Ingreso por km:
+                    <strong>
+                        $${Math.round(ingresoPorKm).toLocaleString("es-CO")} / km
                     </strong>
                 </p>
 
